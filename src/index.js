@@ -2,6 +2,8 @@
 let toDos = []
 window.toDos = toDos;
 
+
+
 class TodoCreate {
     static countId = 0;
     constructor(title, description, duedate, isPriority) {
@@ -50,11 +52,41 @@ class TodoCreate {
 
 
 
+
+function createTodo() {
+    const datas = JSON.parse(localStorage.getItem("task")) || [];
+
+    datas.forEach(item => {
+        const task = new TodoCreate(
+            item.title,
+            item.description,
+            item.duedate,
+            item.isPriority
+        );
+        toDos.push(task);
+    });
+}
+
+function updateLocal() {
+    // Convert class instances into plain objects
+    const plainData = toDos.map(todo => ({
+        title: todo.title,
+        description: todo.description,
+        duedate: todo.duedate,
+        isPriority: todo.isPriority
+    }));
+
+    localStorage.setItem("task", JSON.stringify(plainData));
+}
+
+
+
 function addTodo() {
     const newTodo = new TodoCreate("Task1", "about Task1", "2025-09-2", false)
     toDos.push(newTodo)
-}
 
+    updateLocal()
+}
 
 function removeTodo(todo) {
     const indextodo = toDos.findIndex(task => task.tempid === todo);
@@ -154,11 +186,14 @@ console.log(datePeriods("2025-09-05"));
 console.log(datePeriods("2025-08-30"));
 
 
-addTodo()
-editTodo("Task1", { 
-    newtitle: "task2", 
-    newDescription: "",    // leave empty
-    newDate: "2025-09-03", // example date
-    newPriority: true      // example priority
-});
-console.log(toDos)
+// addTodo()
+// editTodo("Task1", { 
+//     newtitle: "task2", 
+//     newDescription: "",    // leave empty
+//     newDate: "2025-09-03", // example date
+//     newPriority: true      // example priority
+// });
+// console.log(toDos)
+
+
+
