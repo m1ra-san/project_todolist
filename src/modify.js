@@ -4,7 +4,7 @@ import { TodoCreate } from "./creation.js";
 let toDos = [];
 // window.toDos = toDos;
 
-function createTodo() {
+function generateTodo() {
     const datas = JSON.parse(localStorage.getItem("task")) || [];
 
     datas.forEach(item => {
@@ -32,11 +32,14 @@ function updateLocal() {
 
 
 
-function addTodo() {
-    const newTodo = new TodoCreate("Task1", "about Task1", "2025-09-2", false)
+function addTodo(newdata) {
+    const newTodo = new TodoCreate(newdata.title,newdata.description, newdata.dueDate, newdata.isPriority)
     toDos.push(newTodo)
 
-    updateLocal()
+
+    console.log(toDos)
+
+    // updateLocal()
 }
 
 function removeTodo(todo) {
@@ -102,4 +105,4 @@ function getTask() {
 
 
 
-export { addTodo, removeTodo, getTask, createTodo,editTodo };
+export { addTodo, removeTodo, getTask, generateTodo,editTodo };

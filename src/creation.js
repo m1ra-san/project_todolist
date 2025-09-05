@@ -9,6 +9,8 @@ class TodoCreate {
         this.tempid = TodoCreate.counter();
     }
 
+    // new Date(duedate)|| new Date
+
 
     //id increment
     static counter() {

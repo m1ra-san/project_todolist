@@ -1,12 +1,25 @@
 import { TodoCreate } from "./creation.js";
-import { addTodo, removeTodo, editTodo, getTask, createTodo } from "./modify.js";
+import { addTodo, removeTodo, editTodo, getTask, generateTodo, toDos } from "./modify.js";
 import { datePeriods } from "./helper.js";
 
-addTodo()
-console.log(getTask());
-const tasks = getTask(); // this returns your array of todos
-const firstTask = tasks[0]; // get the first one (or find the one you want)
-console.log(datePeriods(firstTask.duedate));
+
+
+document.querySelector("#addbutton").addEventListener("click", e => {
+    document.querySelector(".input-dialog").showModal()
+    console.log("hello")
+})
+
+document.querySelector("#submitToDo").addEventListener("click", e => {
+    e.preventDefault();
+
+    const formEl = document.querySelector("#formAddTodo")
+    const formData = new FormData(formEl);
+    const formDatas = Object.fromEntries(formData);
+    formDatas.isPriority = formEl.querySelector('[name="isPriority"]').checked;
+
+    addTodo(formDatas)
+
+});
 
 
 

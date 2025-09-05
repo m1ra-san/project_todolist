@@ -27,7 +27,7 @@ function datePeriods(duedate) {
   };
   if (date >= startOfWeek && date <= endOfWeek) return `${getDayName(date)}`;
 
-  return duedate;
+  return taskStr;
 }
 
 export { datePeriods };
