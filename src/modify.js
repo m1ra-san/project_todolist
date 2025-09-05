@@ -37,8 +37,6 @@ function addTodo(newdata) {
     toDos.push(newTodo)
 
 
-    console.log(toDos)
-
     // updateLocal()
 }
 

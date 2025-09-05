@@ -1,11 +1,11 @@
 import { getTask } from "./modify.js";
+const formatDate = (d) => d.toISOString().slice(0, 10);
 
 function datePeriods(duedate) {
   const today = new Date();
   const date = new Date(duedate);
-  const formatDate = (d) => d.toISOString().slice(0, 10);
 
-  const todayStr = formatDate(today);
+  const todayStr=dateToday()
   const taskStr = formatDate(date);
 
   if (taskStr < todayStr) return "Pass due date";
@@ -30,4 +30,12 @@ function datePeriods(duedate) {
   return taskStr;
 }
 
-export { datePeriods };
+
+function dateToday(){
+  const today = new Date();
+  const todayStr = formatDate(today);
+  
+  return todayStr
+}
+
+export { datePeriods, dateToday };

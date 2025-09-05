@@ -1,10 +1,10 @@
-
+import { dateToday } from "./helper";
 class TodoCreate {
     static countId = 0;
     constructor(title, description, duedate, isPriority) {
         this._title = title;
         this._description = description;
-        this._duedate = duedate;
+        this._duedate = duedate||dateToday();
         this._isPriority = isPriority;
         this.tempid = TodoCreate.counter();
     }

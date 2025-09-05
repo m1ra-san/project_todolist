@@ -18,9 +18,15 @@ document.querySelector("#submitToDo").addEventListener("click", e => {
     formDatas.isPriority = formEl.querySelector('[name="isPriority"]').checked;
 
     addTodo(formDatas)
-
+    console.log(getTask())
+    closeModal(formEl)
 });
 
+
+function closeModal(form){
+    document.querySelector(".input-dialog").close();
+    form.reset();
+}
 
 
 
