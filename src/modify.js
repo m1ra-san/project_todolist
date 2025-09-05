@@ -2,7 +2,7 @@ import { TodoCreate } from "./creation.js";
 
 //kkaksjd
 let toDos = [];
-// window.toDos = toDos;
+window.toDos = toDos;
 
 function generateTodo() {
     const datas = JSON.parse(localStorage.getItem("task")) || [];
@@ -12,7 +12,8 @@ function generateTodo() {
             item.title,
             item.description,
             item.duedate,
-            item.isPriority
+            item.isPriority,
+            item.taskId
         );
         toDos.push(task);
     });
@@ -24,7 +25,8 @@ function updateLocal() {
         title: todo.title,
         description: todo.description,
         duedate: todo.duedate,
-        isPriority: todo.isPriority
+        isPriority: todo.isPriority,
+        taskId: todo.taskId
     }));
 
     localStorage.setItem("task", JSON.stringify(plainData));
@@ -36,15 +38,14 @@ function addTodo(newdata) {
     const newTodo = new TodoCreate(newdata.title,newdata.description, newdata.dueDate, newdata.isPriority)
     toDos.push(newTodo)
 
-
-    // updateLocal()
+    updateLocal()
 }
 
 function removeTodo(todo) {
-    const indextodo = toDos.findIndex(task => task.tempid === todo);
+    const indextodo = toDos.findIndex(task => task.taskId === todo);
     console.log(indextodo)
     toDos.splice(indextodo, 1)
-
+    updateLocal()
 }
 
 

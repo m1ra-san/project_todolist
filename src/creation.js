@@ -1,21 +1,19 @@
-import { dateToday } from "./helper";
+import { dateToday,generateRandom } from "./helper";
 class TodoCreate {
-    static countId = 0;
-    constructor(title, description, duedate, isPriority) {
+   
+    constructor(title, description, duedate, isPriority,taskId) {
         this._title = title;
         this._description = description;
         this._duedate = duedate||dateToday();
         this._isPriority = isPriority;
-        this.tempid = TodoCreate.counter();
+        this._taskId = taskId||generateRandom();
     }
 
-    // new Date(duedate)|| new Date
-
-
-    //id increment
-    static counter() {
-        return this.countId += 1;
-    }
+    // static countId = 0;
+    // //id increment
+    // static counter() {
+    //     return this.countId += 1;
+    // }
 
     //internal validation
     get title() { return this._title; }
@@ -42,6 +40,10 @@ class TodoCreate {
     get isPriority() { return this._isPriority; }
     set isPriority(val) {
         this._isPriority = Boolean(val); // ensures true/false
+    }
+
+    get taskId() {
+        return this._taskId;
     }
 
 }

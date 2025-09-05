@@ -1,8 +1,8 @@
 import { TodoCreate } from "./creation.js";
 import { addTodo, removeTodo, editTodo, getTask, generateTodo, toDos } from "./modify.js";
-import { datePeriods } from "./helper.js";
+import { datePeriods, generateRandom } from "./helper.js";
 
-
+generateTodo()
 
 document.querySelector("#addbutton").addEventListener("click", e => {
     document.querySelector(".input-dialog").showModal()
@@ -27,7 +27,3 @@ function closeModal(form){
     document.querySelector(".input-dialog").close();
     form.reset();
 }
-
-
-
-

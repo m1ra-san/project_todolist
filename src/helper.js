@@ -38,4 +38,12 @@ function dateToday(){
   return todayStr
 }
 
-export { datePeriods, dateToday };
+
+function generateRandom(){  //  Generate and return a random number
+    const num = Math.round(Math.random()*100);
+    const randomNum = (Math.round((num*10)));
+    return randomNum*new Date().getUTCMilliseconds();
+}
+
+
+export { datePeriods, dateToday,generateRandom };
