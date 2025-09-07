@@ -5,7 +5,7 @@ function datePeriods(duedate) {
   const today = new Date();
   const date = new Date(duedate);
 
-  const todayStr=dateToday()
+  const todayStr = dateToday();
   const taskStr = formatDate(date);
 
   if (taskStr < todayStr) return "Pass due date";
@@ -30,20 +30,18 @@ function datePeriods(duedate) {
   return taskStr;
 }
 
-
-function dateToday(){
+function dateToday() {
   const today = new Date();
   const todayStr = formatDate(today);
-  
-  return todayStr
+
+  return todayStr;
 }
 
-
-function generateRandom(){  //  Generate and return a random number
-    const num = Math.round(Math.random()*100);
-    const randomNum = (Math.round((num*10)));
-    return randomNum*new Date().getUTCMilliseconds();
+function generateRandom() {
+  //  Generate and return a random number
+  const num = Math.round(Math.random() * 100);
+  const randomNum = Math.round(num * 10);
+  return randomNum * new Date().getUTCMilliseconds();
 }
 
-
-export { datePeriods, dateToday,generateRandom };
+export { datePeriods, dateToday, generateRandom };
