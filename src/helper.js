@@ -1,4 +1,4 @@
-import { getTask } from "./modify.js";
+import { getTask } from './modify.js';
 const formatDate = (d) => d.toISOString().slice(0, 10);
 
 function datePeriods(duedate) {
@@ -8,14 +8,14 @@ function datePeriods(duedate) {
   const todayStr = dateToday();
   const taskStr = formatDate(date);
 
-  if (taskStr < todayStr) return "Pass due date";
+  if (taskStr < todayStr) return 'Pass due date';
   //Today
   if (taskStr === todayStr) return `Today`;
 
   //Tommorow
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
-  if (taskStr === formatDate(tomorrow)) return "Tomorrow";
+  if (taskStr === formatDate(tomorrow)) return 'Tomorrow';
 
   //Week
   const startOfWeek = new Date(today);
@@ -23,7 +23,7 @@ function datePeriods(duedate) {
   const endOfWeek = new Date(startOfWeek);
   endOfWeek.setDate(startOfWeek.getDate() + 6);
   const getDayName = (dates) => {
-    return dates.toLocaleDateString("en-US", { weekday: "long" });
+    return dates.toLocaleDateString('en-US', { weekday: 'long' });
   };
   if (date >= startOfWeek && date <= endOfWeek) return `${getDayName(date)}`;
 
