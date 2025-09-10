@@ -1,51 +1,66 @@
-import { dateToday,generateRandom } from "./helper";
+import { dateToday, generateRandom } from './helper';
 class TodoCreate {
-   
-    constructor(title, description, duedate, isPriority,taskId) {
-        this._title = title;
-        this._description = description;
-        this._duedate = duedate||dateToday();
-        this._isPriority = isPriority;
-        this._taskId = taskId||generateRandom();
-    }
+  constructor(title, description, duedate, isPriority, taskId, state) {
+    this._title = title;
+    this._description = description;
+    this._duedate = duedate || dateToday();
+    this._isPriority = isPriority;
+    this._taskId = taskId || generateRandom();
+    this._state = state || false;
+  }
 
-    // static countId = 0;
-    // //id increment
-    // static counter() {
-    //     return this.countId += 1;
-    // }
+  // static countId = 0;
+  // //id increment
+  // static counter() {
+  //     return this.countId += 1;
+  // }
 
-    //internal validation
-    get title() { return this._title; }
-    set title(val) {
-        // if (!val.trim()) throw new Error("Title cannot be empty!");
-        if (!val.trim()) return;
-        this._title = val;
-    }
+  //internal validation
+  get title() {
+    return this._title;
+  }
+  set title(val) {
+    // if (!val.trim()) throw new Error("Title cannot be empty!");
+    if (!val.trim()) return;
+    this._title = val;
+  }
 
-    get description() { return this._description; }
-    set description(val) {
-        // if (!val.trim()) throw new Error("Description cannot be empty!");
-        if (!val.trim()) return;
-        this._description = val;
-    }
+  get description() {
+    return this._description;
+  }
+  set description(val) {
+    // if (!val.trim()) throw new Error("Description cannot be empty!");
+    if (!val.trim()) return;
+    this._description = val;
+  }
 
-    get duedate() { return this._duedate; }
-    set duedate(val) {
-        // if (!val || isNaN(new Date(val))) throw new Error("Invalid due date!");
-        if (!val.trim()) return;
-        this._duedate = val;
-    }
+  get duedate() {
+    return this._duedate;
+  }
+  set duedate(val) {
+    // if (!val || isNaN(new Date(val))) throw new Error("Invalid due date!");
+    if (!val.trim()) return;
+    this._duedate = val;
+  }
 
-    get isPriority() { return this._isPriority; }
-    set isPriority(val) {
-        this._isPriority = Boolean(val); // ensures true/false
-    }
+  get isPriority() {
+    return this._isPriority;
+  }
+  set isPriority(val) {
+    this._isPriority = Boolean(val); // ensures true/false
+  }
 
-    get taskId() {
-        return this._taskId;
-    }
+  get taskId() {
+    return this._taskId;
+  }
 
+  get state() {
+    return this._state;
+  }
+
+  set state(val) {
+    this._state = Boolean(val);
+  }
 }
 
 export { TodoCreate };

@@ -15,7 +15,7 @@ export default defineConfig([
     },
     extends: [js.configs.recommended, prettier],
     rules: {
-      'no-unused-vars': 'warn',
+      'no-unused-vars': 'false',
       'prettier/prettier': 'warn',
     },
   },

@@ -22,6 +22,7 @@ function generateTodo() {
       item.duedate,
       item.isPriority,
       item.taskId,
+      item.state,
     );
     toDos.push(task);
   });
@@ -35,6 +36,7 @@ function updateLocal() {
     duedate: todo.duedate,
     isPriority: todo.isPriority,
     taskId: todo.taskId,
+    state: todo.state,
   }));
 
   localStorage.setItem('task', JSON.stringify(plainData));
@@ -64,24 +66,24 @@ const editTodo = (function () {
   function editTitle(title, newtitle) {
     const task = toDos.find((task) => task.title === title);
     if (!task) return;
-    task._title = newtitle;
+    task.title = newtitle;
   }
   function editDescription(title, newDescription) {
     const task = toDos.find((t) => t.title === title);
     if (!task) return;
-    task._description = newDescription;
+    task.description = newDescription;
   }
 
   function editDueDate(title, newDate) {
     const task = toDos.find((t) => t.title === title);
     if (!task) return;
-    task._duedate = newDate;
+    task.duedate = newDate;
   }
 
   function editPriority(title, newPriority) {
     const task = toDos.find((t) => t.title === title);
     if (!task) return;
-    task._isPriority = newPriority;
+    task.isPriority = newPriority;
   }
 
   //newdate should look liek this{newtitle:" ",newDescription:" "}
@@ -106,8 +108,22 @@ const editTodo = (function () {
   return editAll;
 })();
 
+function taskFinished(id) {
+  const task = toDos.find((task) => task.taskId === id);
+  console.log(task);
+  task.state = true;
+}
+
 function getTask() {
   return toDos;
 }
 
-export { addTodo, removeTodo, getTask, generateTodo, editTodo, updateLocal };
+export {
+  addTodo,
+  removeTodo,
+  getTask,
+  generateTodo,
+  editTodo,
+  updateLocal,
+  taskFinished,
+};

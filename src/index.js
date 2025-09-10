@@ -7,6 +7,7 @@ import {
   generateTodo,
   toDos,
   updateLocal,
+  taskFinished,
 } from './modify.js';
 import { datePeriods, generateRandom } from './helper.js';
 
@@ -56,6 +57,12 @@ function renderTodos(task) {
     const taskDue = document.createElement('p');
     taskDue.textContent = element.duedate;
 
+    const taskState = document.createElement('input');
+    taskState.setAttribute('type', 'checkbox');
+    element.state ? (taskState.checked = true) : (taskState.checked = false); /// will be change since there will be todo for complete and noncompleted
+    taskState.addEventListener('change', taskComplete);
+
+    taskCard.appendChild(taskState);
     taskCard.appendChild(taskTitle);
     taskCard.appendChild(taskDes);
     taskCard.appendChild(taskPrio);
@@ -63,4 +70,11 @@ function renderTodos(task) {
     library.appendChild(taskCard);
   });
 }
+function taskComplete(e) {
+  const taskId = e.target.closest('[data-idtask]').dataset.idtask;
+  taskFinished(Number(taskId));
+  updateLocal();
+  console.log(getTask());
+}
+
 renderTodos(getTask());
