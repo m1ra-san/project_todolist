@@ -8,10 +8,13 @@ import {
   toDos,
   updateLocal,
   taskFinished,
+  getAllTask,
+  getFinishedTask,
 } from './modify.js';
 import { datePeriods, generateRandom } from './helper.js';
 
 generateTodo();
+console.log(getAllTask());
 
 document.querySelector('#addbutton').addEventListener('click', (e) => {
   document.querySelector('.input-dialog').showModal();
@@ -27,8 +30,9 @@ document.querySelector('#submitToDo').addEventListener('click', (e) => {
   formDatas.isPriority = formEl.querySelector('[name="isPriority"]').checked;
 
   addTodo(formDatas);
-  renderTodos(getTask());
+  renderUpdatedTask();
   console.log(getTask());
+  console.log(getAllTask());
   closeModal(formEl);
 });
 
@@ -62,6 +66,11 @@ function renderTodos(task) {
     element.state ? (taskState.checked = true) : (taskState.checked = false); /// will be change since there will be todo for complete and noncompleted
     taskState.addEventListener('change', taskComplete);
 
+    const taskdel = document.createElement('button');
+    taskdel.textContent = 'Delete';
+    taskdel.addEventListener('click', delTask);
+
+    taskCard.appendChild(taskdel);
     taskCard.appendChild(taskState);
     taskCard.appendChild(taskTitle);
     taskCard.appendChild(taskDes);
@@ -73,8 +82,21 @@ function renderTodos(task) {
 function taskComplete(e) {
   const taskId = e.target.closest('[data-idtask]').dataset.idtask;
   taskFinished(Number(taskId));
+  renderUpdatedTask();
   updateLocal();
-  console.log(getTask());
+}
+
+function delTask(e) {
+  const taskId = e.target.closest('[data-idtask]').dataset.idtask;
+  removeTodo(taskId);
+  updateLocal();
+  renderUpdatedTask();
+}
+
+function renderUpdatedTask() {
+  renderTodos(getTask());
 }
 
 renderTodos(getTask());
+
+// git commit -m "Add filter for finish and unfinish task"

@@ -50,7 +50,7 @@ function addTodo(newdata) {
     newdata.isPriority,
   );
   toDos.push(newTodo);
-
+  console.log(getUnfinisedTask());
   updateLocal();
 }
 
@@ -115,6 +115,14 @@ function taskFinished(id) {
 }
 
 function getTask() {
+  return toDos.filter((task) => task.state === false);
+}
+
+function getFinishedTask() {
+  return toDos.filter((task) => task.state === true);
+}
+
+function getAllTask() {
   return toDos;
 }
 
@@ -126,4 +134,6 @@ export {
   editTodo,
   updateLocal,
   taskFinished,
+  getAllTask,
+  getFinishedTask,
 };
