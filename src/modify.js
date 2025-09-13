@@ -50,7 +50,6 @@ function addTodo(newdata) {
     newdata.isPriority,
   );
   toDos.push(newTodo);
-  console.log(getUnfinisedTask());
   updateLocal();
 }
 
@@ -87,13 +86,14 @@ const editTodo = (function () {
   }
 
   //newdate should look liek this{newtitle:" ",newDescription:" "}
-  function editAll(title, newdatas) {
-    const task = toDos.find((task) => task.title === title);
+  function editAll(id, newdatas) {
+    const task = toDos.find((task) => task.taskId === id);
     if (!task) return;
     task.title = newdatas.newtitle;
     task.description = newdatas.newDescription;
     task.duedate = newdatas.newDate;
     task.isPriority = newdatas.newPriority;
+    updateLocal();
   }
 
   //slowerapproach- AVOID NEXT TIME

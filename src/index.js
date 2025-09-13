@@ -31,13 +31,12 @@ document.querySelector('#submitToDo').addEventListener('click', (e) => {
 
   addTodo(formDatas);
   renderUpdatedTask();
-  console.log(getTask());
-  console.log(getAllTask());
   closeModal(formEl);
 });
 
 function closeModal(form) {
   document.querySelector('.input-dialog').close();
+  document.querySelector('.edit-dialog').close();
   form.reset();
 }
 
@@ -70,6 +69,25 @@ function renderTodos(task) {
     taskdel.textContent = 'Delete';
     taskdel.addEventListener('click', delTask);
 
+    const taskEdit = document.createElement('button');
+    taskEdit.textContent = 'Edit';
+    taskEdit.addEventListener('click', (e) => {
+      const taskId = e.target.closest('[data-idtask]').dataset.idtask;
+      const edtitle = document.querySelector('#newtitle');
+      const eddes = document.querySelector('#newDescription');
+      const eddate = document.querySelector('#newDate');
+      const edprio = document.querySelector('#newPriority');
+
+      edtitle.value = element.title;
+      eddes.value = element.description;
+      eddate.value = element.duedate;
+      element.isPriority ? (edprio.checked = true) : (edprio.checked = false);
+
+      document.querySelector('.edit-dialog').showModal();
+      editTask(taskId);
+    });
+
+    taskCard.appendChild(taskEdit);
     taskCard.appendChild(taskdel);
     taskCard.appendChild(taskState);
     taskCard.appendChild(taskTitle);
@@ -88,15 +106,33 @@ function taskComplete(e) {
 
 function delTask(e) {
   const taskId = e.target.closest('[data-idtask]').dataset.idtask;
-  removeTodo(taskId);
+  removeTodo(Number(taskId));
   updateLocal();
   renderUpdatedTask();
 }
 
-function renderUpdatedTask() {
-  renderTodos(getTask());
+function editTask(taskId) {
+  document.querySelector('#edToDo').addEventListener('click', (e) => {
+    e.preventDefault();
+
+    const formEl = document.querySelector('#formEditTodo');
+    const formData = new FormData(formEl);
+    const formDatas = Object.fromEntries(formData);
+    formDatas.newPriority = formEl.querySelector(
+      '[name="newPriority"]',
+    ).checked;
+
+    editTodo(Number(taskId), formDatas);
+    renderUpdatedTask();
+    console.log(typeof taskId);
+    console.log(formDatas);
+    console.log(formDatas);
+    closeModal(formEl);
+  });
 }
 
-renderTodos(getTask());
+function renderUpdatedTask() {
+  renderTodos(getAllTask());
+}
 
-// git commit -m "Add filter for finish and unfinish task"
+renderTodos(getAllTask());
