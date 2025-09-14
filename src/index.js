@@ -43,7 +43,10 @@ function closeModal(form) {
 function renderTodos(task) {
   const library = document.querySelector('.library');
   library.innerHTML = '';
-  task.forEach((element) => {
+  const doneTask = task.filter((t) => t.state === true);
+  const undoneTask = task.filter((t) => t.state === false);
+
+  undoneTask.forEach((element) => {
     const taskCard = document.createElement('div');
     taskCard.style.backgroundColor = 'rgb(0, 0, 255)';
     taskCard.setAttribute('data-idtask', element.taskId);
@@ -95,6 +98,35 @@ function renderTodos(task) {
     taskCard.appendChild(taskPrio);
     taskCard.appendChild(taskDue);
     library.appendChild(taskCard);
+  });
+
+  doneTask.forEach((element) => {
+    const donetaskCard = document.createElement('div');
+    donetaskCard.style.backgroundColor = 'rgba(26, 255, 0, 1)';
+    donetaskCard.setAttribute('data-idtask', element.taskId);
+
+    const taskTitle = document.createElement('h2');
+    taskTitle.textContent = element.title;
+
+    const taskDes = document.createElement('p');
+    taskDes.textContent = element.description;
+
+    const taskPrio = document.createElement('span');
+    taskPrio.textContent = `Priority: ${element.isPriority ? 'True' : 'False'}`;
+
+    const taskDue = document.createElement('p');
+    taskDue.textContent = element.duedate;
+
+    const taskdel = document.createElement('button');
+    taskdel.textContent = 'Delete';
+    taskdel.addEventListener('click', delTask);
+
+    donetaskCard.appendChild(taskdel);
+    donetaskCard.appendChild(taskTitle);
+    donetaskCard.appendChild(taskDes);
+    donetaskCard.appendChild(taskPrio);
+    donetaskCard.appendChild(taskDue);
+    library.appendChild(donetaskCard);
   });
 }
 function taskComplete(e) {
