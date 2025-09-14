@@ -40,10 +40,10 @@ function closeModal(form) {
   form.reset();
 }
 
-function renderTodos(task) {
+function renderTodos(task, showDone) {
+  //showDone is a bool that show and unshow done task
   const library = document.querySelector('.library');
   library.innerHTML = '';
-  const doneTask = task.filter((t) => t.state === true);
   const undoneTask = task.filter((t) => t.state === false);
 
   undoneTask.forEach((element) => {
@@ -100,34 +100,37 @@ function renderTodos(task) {
     library.appendChild(taskCard);
   });
 
-  doneTask.forEach((element) => {
-    const donetaskCard = document.createElement('div');
-    donetaskCard.style.backgroundColor = 'rgba(26, 255, 0, 1)';
-    donetaskCard.setAttribute('data-idtask', element.taskId);
+  if (showDone) {
+    const doneTask = task.filter((t) => t.state === true);
+    doneTask.forEach((element) => {
+      const donetaskCard = document.createElement('div');
+      donetaskCard.style.backgroundColor = 'rgba(26, 255, 0, 1)';
+      donetaskCard.setAttribute('data-idtask', element.taskId);
 
-    const taskTitle = document.createElement('h2');
-    taskTitle.textContent = element.title;
+      const taskTitle = document.createElement('h2');
+      taskTitle.textContent = element.title;
 
-    const taskDes = document.createElement('p');
-    taskDes.textContent = element.description;
+      const taskDes = document.createElement('p');
+      taskDes.textContent = element.description;
 
-    const taskPrio = document.createElement('span');
-    taskPrio.textContent = `Priority: ${element.isPriority ? 'True' : 'False'}`;
+      const taskPrio = document.createElement('span');
+      taskPrio.textContent = `Priority: ${element.isPriority ? 'True' : 'False'}`;
 
-    const taskDue = document.createElement('p');
-    taskDue.textContent = element.duedate;
+      const taskDue = document.createElement('p');
+      taskDue.textContent = element.duedate;
 
-    const taskdel = document.createElement('button');
-    taskdel.textContent = 'Delete';
-    taskdel.addEventListener('click', delTask);
+      const taskdel = document.createElement('button');
+      taskdel.textContent = 'Delete';
+      taskdel.addEventListener('click', delTask);
 
-    donetaskCard.appendChild(taskdel);
-    donetaskCard.appendChild(taskTitle);
-    donetaskCard.appendChild(taskDes);
-    donetaskCard.appendChild(taskPrio);
-    donetaskCard.appendChild(taskDue);
-    library.appendChild(donetaskCard);
-  });
+      donetaskCard.appendChild(taskdel);
+      donetaskCard.appendChild(taskTitle);
+      donetaskCard.appendChild(taskDes);
+      donetaskCard.appendChild(taskPrio);
+      donetaskCard.appendChild(taskDue);
+      library.appendChild(donetaskCard);
+    });
+  }
 }
 function taskComplete(e) {
   const taskId = e.target.closest('[data-idtask]').dataset.idtask;
