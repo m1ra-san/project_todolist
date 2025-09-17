@@ -1,0 +1,76 @@
+* {
+  /* outline: 2px solid red; */
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --header-h: clamp(2rem, 10vh, 200px);
+  --h1: clamp(2rem, 5vw, 4rem);
+  --titles: clamp(2rem, 4vw, 4rem);
+  --texts: clamp(1rem, 3vw, 3rem);
+}
+
+h1 {
+  font-size: var(--h1);
+}
+
+body {
+  background-color: rgb(207, 232, 234);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+header {
+  height: var(--header-h);
+  flex-shrink: 0;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  flex: 1;
+  min-height: calc(100vh - var(--header-h));
+  overflow-y: auto;
+  width: 80vw;
+}
+
+.taskcard {
+  height: 100px;
+  background-color: rgb(219, 219, 219);
+  padding: 15px;
+  border-radius: 10px;
+  border: 2px solid rgba(83, 110, 145, 0.582);
+}
+
+.library {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.addbutton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: rgb(39, 129, 240);
+  color: white;
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.438);
+  box-sizing: border-box;
+  margin: 10px 0;
+}
+
+.done {
+  box-shadow: inset 7px -4px 0px 0px #01ff01;
+}
+
+.undone {
+  box-shadow: inset 7px -4px 0px 0px #ff0000;
+}

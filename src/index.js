@@ -1,3 +1,4 @@
+import './style.css';
 import { TodoCreate } from './creation.js';
 import {
   addTodo,
@@ -48,7 +49,8 @@ function renderTodos(task, showDone) {
 
   undoneTask.forEach((element) => {
     const taskCard = document.createElement('div');
-    taskCard.style.backgroundColor = 'rgb(0, 0, 255)';
+    // taskCard.style.backgroundColor = 'rgb(0, 0, 255)';
+    taskCard.classList.add('undone', 'taskcard');
     taskCard.setAttribute('data-idtask', element.taskId);
 
     const taskTitle = document.createElement('h2');
@@ -100,11 +102,12 @@ function renderTodos(task, showDone) {
     library.appendChild(taskCard);
   });
 
-  if (showDone) {
+  if (!showDone) {
     const doneTask = task.filter((t) => t.state === true);
     doneTask.forEach((element) => {
       const donetaskCard = document.createElement('div');
-      donetaskCard.style.backgroundColor = 'rgba(26, 255, 0, 1)';
+      // donetaskCard.style.backgroundColor = 'rgba(26, 255, 0, 1)';
+      donetaskCard.classList.add('done', 'taskcard');
       donetaskCard.setAttribute('data-idtask', element.taskId);
 
       const taskTitle = document.createElement('h2');
