@@ -89,7 +89,7 @@ function renderTodos(task, showDone) {
       element.isPriority ? (edprio.checked = true) : (edprio.checked = false);
 
       document.querySelector('.edit-dialog').showModal();
-      editTask(taskId);
+      editTask(taskId, element.isPriority);
     });
 
     taskCard.appendChild(taskEdit);

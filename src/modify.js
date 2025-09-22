@@ -49,7 +49,7 @@ function addTodo(newdata) {
     newdata.dueDate,
     newdata.isPriority,
   );
-  toDos.push(newTodo);
+  toDos.unshift(newTodo);
   updateLocal();
 }
 
