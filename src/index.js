@@ -17,11 +17,12 @@ import { datePeriods, generateRandom } from './helper.js';
 generateTodo();
 console.log(getAllTask());
 
+//Add task
 document.querySelector('#addbutton').addEventListener('click', (e) => {
   document.querySelector('.input-dialog').showModal();
   console.log('hello');
 });
-
+//Submit Task
 document.querySelector('#submitToDo').addEventListener('click', (e) => {
   e.preventDefault();
 
@@ -76,20 +77,8 @@ function renderTodos(task, showDone) {
 
     const taskEdit = document.createElement('button');
     taskEdit.textContent = 'Edit';
-    taskEdit.addEventListener('click', (e) => {
-      const taskId = e.target.closest('[data-idtask]').dataset.idtask;
-      const edtitle = document.querySelector('#newtitle');
-      const eddes = document.querySelector('#newDescription');
-      const eddate = document.querySelector('#newDate');
-      const edprio = document.querySelector('#newPriority');
-
-      edtitle.value = element.title;
-      eddes.value = element.description;
-      eddate.value = element.duedate;
-      element.isPriority ? (edprio.checked = true) : (edprio.checked = false);
-
-      document.querySelector('.edit-dialog').showModal();
-      editTask(taskId, element.isPriority);
+    taskEdit.addEventListener('click', () => {
+      editTask(element);
     });
 
     taskCard.appendChild(taskEdit);
@@ -149,24 +138,108 @@ function delTask(e) {
   renderUpdatedTask();
 }
 
-function editTask(taskId) {
-  document.querySelector('#edToDo').addEventListener('click', (e) => {
-    e.preventDefault();
+//Edit task
+function editTask(elementData) {
+  console.log(elementData);
+  //Turn Element data into Object that can be edited
+  const taskData = {
+    title: elementData.title,
+    description: elementData.description,
+    duedate: elementData.duedate,
+    isPriority: elementData.isPriority,
+    taskId: elementData.taskId,
+    state: elementData.state,
+  };
+  console.log(taskData);
+  createEditTodo(taskData);
+}
 
-    const formEl = document.querySelector('#formEditTodo');
-    const formData = new FormData(formEl);
-    const formDatas = Object.fromEntries(formData);
-    formDatas.newPriority = formEl.querySelector(
-      '[name="newPriority"]',
-    ).checked;
+// Create edit Task Dialouge
+function createEditTodo(task) {
+  //Create dialog element
+  const dialog = document.createElement('dialog');
+  dialog.id = 'editTodoDialog';
 
-    editTodo(Number(taskId), formDatas);
+  //Create form
+  const form = document.createElement('form');
+  form.id = 'formEditTodo';
+  form.method = 'dialog';
+
+  // === Title Label + Input ===
+  const labelTitle = document.createElement('label');
+  labelTitle.htmlFor = 'newtitle';
+  labelTitle.textContent = 'Title:';
+  const inputTitle = document.createElement('input');
+  inputTitle.type = 'text';
+  inputTitle.name = 'newtitle';
+  inputTitle.id = 'newtitle';
+  inputTitle.value = task.title;
+
+  // === Description Label + Input ===
+  const labelDescription = document.createElement('label');
+  labelDescription.htmlFor = 'newDescription';
+  labelDescription.textContent = 'Description';
+  const inputDescription = document.createElement('input');
+  inputDescription.type = 'text';
+  inputDescription.name = 'newDescription';
+  inputDescription.id = 'newDescription';
+  inputDescription.value = task.description;
+
+  // === Date Input ===
+  const inputDate = document.createElement('input');
+  inputDate.type = 'date';
+  inputDate.name = 'newDate';
+  inputDate.id = 'newDate';
+  inputDate.value = task.duedate;
+
+  // === Priority Checkbox ===
+  const inputPriority = document.createElement('input');
+  inputPriority.type = 'checkbox';
+  inputPriority.name = 'newPriority';
+  inputPriority.id = 'newPriority';
+  task.isPriority
+    ? (inputPriority.checked = true)
+    : (inputPriority.checked = false);
+
+  // === Submit Button ===
+  const buttonSubmit = document.createElement('button');
+  buttonSubmit.type = 'submit';
+  buttonSubmit.id = 'edToDo';
+  buttonSubmit.textContent = 'Submit';
+
+  // Append everything to the form
+  form.appendChild(labelTitle);
+  form.appendChild(inputTitle);
+  form.appendChild(labelDescription);
+  form.appendChild(inputDescription);
+  form.appendChild(inputDate);
+  form.appendChild(inputPriority);
+  form.appendChild(buttonSubmit);
+
+  // Put form inside dialog
+  dialog.appendChild(form);
+  document.body.appendChild(dialog);
+
+  //Edit the Storage Task
+  form.addEventListener('submit', (e) => {
+    e.preventDefault;
+
+    const formDatas = {
+      newtitle: inputTitle.value,
+      newDescription: inputDescription.value,
+      newDate: inputDate.value,
+      newPriority: inputPriority.checked,
+    };
+
+    editTodo(Number(task.taskId), formDatas);
     renderUpdatedTask();
-    console.log(typeof taskId);
-    console.log(formDatas);
-    console.log(formDatas);
-    closeModal(formEl);
+    form.reset();
+    dialog.close();
+    dialog.remove();
   });
+
+  //showDialuge
+  dialog.showModal();
 }
 
 function renderUpdatedTask() {
